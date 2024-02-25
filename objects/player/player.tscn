@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://d4ntlvdl32e85"]
+
+[ext_resource type="Texture2D" uid="uid://w6js1n0w13j1" path="res://objects/player/player.png" id="1_6bo0g"]
+[ext_resource type="Script" path="res://objects/player/player.gd" id="1_pvxe3"]
+[ext_resource type="Script" path="res://objects/player/states/idle.gd" id="2_m30ot"]
+[ext_resource type="Script" path="res://objects/player/states/walk.gd" id="4_bopi5"]
+[ext_resource type="Script" path="res://objects/player/states/sprint.gd" id="5_rlktt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hjrpw"]
+size = Vector2(7, 3)
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("hsm", "idle_state", "walk_state", "sprint_state") groups=["player"]]
+scale = Vector2(4, 4)
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_pvxe3")
+hsm = NodePath("LimboHSM")
+idle_state = NodePath("LimboHSM/IdleState")
+walk_state = NodePath("LimboHSM/WalkState")
+sprint_state = NodePath("LimboHSM/SprintState")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_6bo0g")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 5)
+shape = SubResource("RectangleShape2D_hjrpw")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="LimboHSM" type="LimboHSM" parent="."]
+
+[node name="IdleState" type="LimboState" parent="LimboHSM"]
+script = ExtResource("2_m30ot")
+
+[node name="WalkState" type="LimboState" parent="LimboHSM"]
+script = ExtResource("4_bopi5")
+speed = 200.0
+
+[node name="SprintState" type="LimboState" parent="LimboHSM"]
+script = ExtResource("5_rlktt")
+speed = 400.0
+stamina_use = 30.0
+stamina_recovery = 30.0
+stamina_recovery_time = 2.0
