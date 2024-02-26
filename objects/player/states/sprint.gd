@@ -5,7 +5,7 @@ extends LimboState
 @export var stamina_recovery: float
 @export var stamina_recovery_time: float
 
-func _update(delta):
+func _update(_delta):
 	var vector = agent.get_vector()
 	
 	agent.move(vector * speed)

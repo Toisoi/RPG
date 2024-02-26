@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends "res://agents/scripts/agent_base.gd"
 
 @export var hsm: LimboHSM
 @export var idle_state: LimboState
@@ -23,11 +23,6 @@ func _ready():
 func _unhandled_input(event):
 	if event.is_action_pressed("sprint") and can_sprint:
 		hsm.dispatch("sprint")
-
-
-func move(vel: Vector2) -> void:
-	velocity = vel
-	move_and_slide()
 
 
 func use_stamina(usage: float) -> void:

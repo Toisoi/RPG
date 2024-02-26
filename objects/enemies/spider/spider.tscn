@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://fctm6yr5slav"]
+
+[ext_resource type="Script" path="res://objects/enemies/spider/spider.gd" id="1_x0ghj"]
+[ext_resource type="Texture2D" uid="uid://dxfnytsrsiarb" path="res://objects/enemies/spider/spider.png" id="2_dseih"]
+[ext_resource type="BehaviorTree" uid="uid://q7fsrrf0cces" path="res://ai/trees/melee_enemy.tres" id="3_ympoy"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_1y36c"]
+var/speed/name = "speed"
+var/speed/type = 3
+var/speed/value = 150.0
+var/speed/hint = 1
+var/speed/hint_string = "10,1000,10"
+
+[node name="SpiderEnemy" type="CharacterBody2D" node_paths=PackedStringArray("navigation_agent", "sprite")]
+scale = Vector2(4, 4)
+script = ExtResource("1_x0ghj")
+navigation_agent = NodePath("NavigationAgent2D")
+sprite = NodePath("Sprite2D")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_dseih")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(-10, 16, -13, 8.75, 15, 8.75, 14, 12, 11.75, 16)
+
+[node name="BTPlayer" type="BTPlayer" parent="."]
+behavior_tree = ExtResource("3_ympoy")
+blackboard_plan = SubResource("BlackboardPlan_1y36c")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+debug_enabled = true

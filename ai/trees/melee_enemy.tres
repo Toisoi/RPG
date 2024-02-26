@@ -1,0 +1,37 @@
+[gd_resource type="BehaviorTree" load_steps=9 format=3 uid="uid://q7fsrrf0cces"]
+
+[ext_resource type="Script" path="res://ai/tasks/get_first_in_group.gd" id="1_rabm6"]
+[ext_resource type="Script" path="res://ai/tasks/pursue.gd" id="2_i435l"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_tn7a6"]
+var/speed/name = "speed"
+var/speed/type = 3
+var/speed/value = 150.0
+var/speed/hint = 1
+var/speed/hint_string = "10,1000,10"
+
+[sub_resource type="BTRandomWait" id="BTRandomWait_c7nhk"]
+min_duration = 0.7
+max_duration = 1.5
+
+[sub_resource type="BTAction" id="BTAction_1y8op"]
+script = ExtResource("1_rabm6")
+group = &"player"
+output_var = "target"
+
+[sub_resource type="BTAction" id="BTAction_l1q0j"]
+script = ExtResource("2_i435l")
+target_var = "target"
+speed_var = "speed"
+approach_distance = 100.0
+
+[sub_resource type="BTTimeLimit" id="BTTimeLimit_qumcu"]
+children = [SubResource("BTAction_l1q0j")]
+time_limit = 3.0
+
+[sub_resource type="BTSequence" id="BTSequence_7dfmw"]
+children = [SubResource("BTRandomWait_c7nhk"), SubResource("BTAction_1y8op"), SubResource("BTTimeLimit_qumcu")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_tn7a6")
+root_task = SubResource("BTSequence_7dfmw")

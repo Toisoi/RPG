@@ -7,7 +7,6 @@ extends BTAction
 var _dir: Vector2
 var _desired_velocity: Vector2
 
-
 func _enter() -> void:
 	_dir = Vector2.LEFT * agent.get_facing()
 	var speed: float = blackboard.get_var(speed_var, 200.0)
