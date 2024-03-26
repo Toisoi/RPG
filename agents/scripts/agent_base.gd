@@ -1,6 +1,6 @@
 extends CharacterBody2D
 
-@export var sprite: Sprite2D
+@export var sprite: AnimatedSprite2D
 
 func move(vel: Vector2) -> void:
 	velocity = vel
@@ -8,7 +8,7 @@ func move(vel: Vector2) -> void:
 
 
 func update_facing() -> void:
-	if velocity.x > 0 and not sprite.flip_h:
-		sprite.flip_h = true
-	elif velocity.x < 0 and sprite.flip_h:
+	if velocity.x > 0:
 		sprite.flip_h = false
+	elif velocity.x < 0:
+		sprite.flip_h = true
